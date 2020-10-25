@@ -8,15 +8,19 @@ from skimage.color import rgb2lab, lab2rgb, rgb2gray
 st.title("Black-and-white image colorization")
 st.sidebar.title("Black-and-white image colorization")
 
-st.markdown("This app is a dashboard for converting black-and-white images to RGB images️")
-st.sidebar.markdown("This app is a dashboard for converting black-and-white images to RGB images️")
+st.markdown("This app is for colorizing black-and-white images️")
+st.sidebar.markdown("This app is for colorizing black-and-white images️")
 
-@st.cache(persist=True)
 def load_model():
     model = tf.keras.models.load_model("color_model")
     return model
 
 model = load_model()
+
+original = io.imread("me.jpg")
+gray = io.imread("gray.jpg")
+color = io.imread("color.jpg")
+st.image([original, gray, color], width=185, caption=["Original", "Gray (Input)", "Colorized (Output)"])
 
 img_list = []
 
@@ -49,4 +53,4 @@ if uploaded_file is not None:
     img_list.append(result)
 
     # Display all 3 images
-    st.image(img_list, width=185)
+    st.image(img_list, width=185, caption=["Original", "Gray (Input)", "Colorized (Output)"])
